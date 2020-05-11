@@ -22,13 +22,40 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    ZoomUs.instance.initializationListener.listen((_){
-      print(_);
-    });
-    ZoomUs.instance.init(
+    ZoomUs.instance.initSdk(
       appKey: "qClDCUTS1sHPHsNIQCWoKaElsdlpfMA64RpV",
       appSecret: "mMts2ZQpuaL6NvTmDnMRn02S3HDoSiCtfrJe"
-    );
+    ).listen((x){
+      print(x);
+      if(mounted)setState(() {
+        _platformVersion = x;
+      });
+    });
+  }
+
+  Future<void> joinWithMeeting() async {
+    ZoomUs.instance.joinWithMeeting(
+      displayName: "Plugin test",
+      meetingId: "3684128352",
+      password: "6hfBLz"
+    ).listen((x){
+      print(x);
+      if(mounted)setState(() {
+        _platformVersion = x;
+      });
+    });
+  }
+
+  Future<void> signInWithZoom() async {
+    ZoomUs.instance.signInWithZoom(
+      email: "official.rouf69nb@gmail.com",
+      password: "Rouf69nb"
+    ).listen((x){
+      print(x);
+      if(mounted)setState(() {
+        _platformVersion = x;
+      });
+    });
   }
 
   @override
@@ -39,9 +66,9 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Text(_platformVersion),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: initPlatformState),
+        floatingActionButton: FloatingActionButton(onPressed: signInWithZoom),
       ),
     );
   }
