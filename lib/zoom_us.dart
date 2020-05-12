@@ -87,6 +87,10 @@ class ZoomUs {
     });
   }
 
+  leaveMeeting([bool endIfPossible=true])async{
+    await _channel.invokeMethod("leaveMeeting",{"endIfPossible":endIfPossible}).catchError((e)async{ });
+  }
+
   Future<bool> get isLoggedIn async => await _channel.invokeMethod("isLoggedIn").catchError((e)async{
       return false;
   });

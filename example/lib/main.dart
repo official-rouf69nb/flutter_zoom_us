@@ -90,7 +90,9 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Text(_platformVersion),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: hostMeeting),
+        floatingActionButton: FloatingActionButton(onPressed: ()async{
+          print(await ZoomUs.instance.isInitialized);
+        }),
       ),
     );
   }

@@ -91,6 +91,10 @@ class ZoomUsPlugin(registrar: Registrar,
         "signOutFromZoom" -> {
             result.success(sdkController.signOutFromZoom())
         }
+        "leaveMeeting" -> {
+            result.success(true)
+            sdkController.leaveMeeting(call.argument<Boolean>("endIfPossible")!!)
+        }
         else -> {
           result.success(true)
         }

@@ -2,7 +2,7 @@ package com.codepoka.zoom_us
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.PluginRegistry
 import us.zoom.sdk.*
-import java.util.*
+import kotlin.Exception
 
 class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
     private var isMeetingRunning: Boolean=false
@@ -340,6 +340,12 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onMeetingNeedPasswordOrDisplayName(p0: Boolean, p1: Boolean, p2: InMeetingEventHandler?) {}
         })
         meetingService.startInstantMeeting(registrar.activeContext(), opts)
+    }
+
+    fun leaveMeeting(endIfPossible: Boolean) {
+        try {
+            ZoomSDK.getInstance().inMeetingService.leaveCurrentMeeting(endIfPossible)
+        }catch (e:Exception){}
     }
 
 }
