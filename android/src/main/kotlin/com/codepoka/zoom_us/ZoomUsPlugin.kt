@@ -11,7 +11,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 class ZoomUsPlugin(registrar: Registrar,
                    initSdkEventChannel: EventChannel,
                    joinWithEventChannel: EventChannel,
-                   signInWithZoomEventChannel: EventChannel
+                   signInWithZoomEventChannel: EventChannel,
+                   hostInstantMeetingEventChannel: EventChannel
 ) : MethodCallHandler{
   private val sdkController:ZoomSdkController = ZoomSdkController(registrar)
 
@@ -22,10 +23,12 @@ class ZoomUsPlugin(registrar: Registrar,
       val initSdkEventChannel = EventChannel(registrar.messenger(),"com.codepoka.zoom_us/zoom_us_initSdk")
       val joinWithMeetingEventChannel = EventChannel(registrar.messenger(),"com.codepoka.zoom_us/joinWithMeeting")
       val signInWithZoomEventChannel = EventChannel(registrar.messenger(),"com.codepoka.zoom_us/signInWithZoom")
+      val hostInstantMeetingEventChannel = EventChannel(registrar.messenger(),"com.codepoka.zoom_us/hostInstantMeeting")
       val zoomUsPlugin = ZoomUsPlugin(registrar,
               initSdkEventChannel,
               joinWithMeetingEventChannel,
-              signInWithZoomEventChannel
+              signInWithZoomEventChannel,
+              hostInstantMeetingEventChannel
       )
       channel.setMethodCallHandler(zoomUsPlugin)
     }
@@ -62,15 +65,34 @@ class ZoomUsPlugin(registrar: Registrar,
             }
         }
     })
+    hostInstantMeetingEventChannel.setStreamHandler(object :EventChannel.StreamHandler{
+        override fun onCancel(arguments: Any?) {}
+        override fun onListen(arguments: Any, events: EventChannel.EventSink?) {
+            val args = (arguments as MutableMap<*, *>)
+            if(args["method"] =="hostInstantMeeting"){
+                val data = (args["data"] as MutableMap<*, *>)
+                sdkController.hostInstantMeeting(data,events)
+            }
+        }
+    })
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
     when (call.method) {
-        "initSdk" -> {
-          result.success(true)
+        "isInitialized" -> {
+          result.success(sdkController.isSdkInitialized)
+        }
+        "isLoggedIn" -> {
+            result.success(sdkController.isLoggedIn)
+        }
+        "isInMeeting" -> {
+            result.success(sdkController.isInMeeting)
+        }
+        "signOutFromZoom" -> {
+            result.success(sdkController.signOutFromZoom())
         }
         else -> {
-          result.notImplemented()
+          result.success(true)
         }
     }
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:zoom_us/zoom_us.dart';
 
 void main() => runApp(MyApp());
@@ -30,6 +28,10 @@ class _MyAppState extends State<MyApp> {
       if(mounted)setState(() {
         _platformVersion = x;
       });
+
+      if(x=="SUCCESS"){
+        signInWithZoom();
+      }
     });
   }
 
@@ -58,6 +60,26 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Future<void> hostMeeting() async {
+    ZoomUs.instance.hostInstantMeeting(
+      onMeetingStarted: (x){
+        print(x);
+      },
+      onMeetingStateChange: (x){
+        print(x);
+        if(mounted)setState(() {
+          _platformVersion = x.toString();
+        });
+      },
+      onUserJoin: (x){
+        print(x);
+      },
+      onUserLeave: (x){
+        print(x);
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +90,7 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Text(_platformVersion),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: signInWithZoom),
+        floatingActionButton: FloatingActionButton(onPressed: hostMeeting),
       ),
     );
   }
