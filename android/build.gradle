@@ -37,6 +37,16 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    packagingOptions {
+        exclude 'res/drawable/zm_next_arrow.xml'
+        exclude 'res/drawable-xhdpi-v4/zm_next_arrow_pressed.png'
+        exclude 'res/drawable-xhdpi-v4/zm_next_arrow_normal.png'
+        exclude 'AndroidManifest.xml'
+        exclude 'annotations.zip'
+        exclude 'classes.jar'
+        exclude 'R.txt'
+        exclude 'res/values/values.xml'
+    }
 }
 
 dependencies {
