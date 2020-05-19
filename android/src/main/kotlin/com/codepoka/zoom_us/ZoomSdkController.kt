@@ -249,7 +249,7 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
         opts.no_dial_in_via_phone = true
         opts.no_dial_out_to_phone = true
         opts.no_disconnect_audio = false
-        opts.no_share = true
+        opts.no_share = false
         opts.custom_meeting_id= data["meetingId"] as String?
 
         meetingService.addListener { meetingStatus, _, _ ->
@@ -268,7 +268,8 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
                 null -> sink?.success("UNKNOWN")
             }
 
-            if(!isMeetingRunning && meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING){
+
+            if(meetingStatus == MeetingStatus.MEETING_STATUS_INMEETING){
                 isMeetingRunning=true
                 val s = ZoomSDK.getInstance().inMeetingService
                 sink?.success(hashMapOf(
@@ -282,8 +283,8 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
                 ))
             }
             else if(isMeetingRunning && meetingStatus == MeetingStatus.MEETING_STATUS_IDLE){
-                isMeetingRunning=false
                 sink?.success("MEETING_ENDED")
+                isMeetingRunning=false
             }
         }
         zoomSDK.inMeetingService.addListener(object : InMeetingServiceListener {
@@ -339,6 +340,7 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onUserVideoStatusChanged(p0: Long) {}
             override fun onMeetingNeedPasswordOrDisplayName(p0: Boolean, p1: Boolean, p2: InMeetingEventHandler?) {}
         })
+
         meetingService.startInstantMeeting(registrar.activeContext(), opts)
     }
 
