@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
           child: Text(_platformVersion),
         ),
         floatingActionButton: FloatingActionButton(onPressed: ()async{
-          print(await ZoomUs.instance.isLoggedIn);
+          hostMeeting();
         }),
       ),
     );

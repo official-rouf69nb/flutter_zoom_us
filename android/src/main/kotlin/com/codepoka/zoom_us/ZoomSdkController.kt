@@ -147,9 +147,17 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onChatMessageReceived(p0: InMeetingChatMessage?) {}
             override fun onUserNetworkQualityChanged(p0: Long) {}
             override fun onMeetingFail(p0: Int, p1: Int) {}
+            override fun onFreeMeetingUpgradeToProMeeting() {}
+
+            override fun onFreeMeetingNeedToUpgrade(p0: FreeMeetingNeedUpgradeType?, p1: String?) {}
+
             override fun onUserAudioTypeChanged(p0: Long) {}
+            override fun onFreeMeetingUpgradeToGiftFreeTrialStop() {}
+
             override fun onMyAudioSourceTypeChanged(p0: Int) {}
             override fun onSilentModeChanged(p0: Boolean) {}
+            override fun onFreeMeetingUpgradeToGiftFreeTrialStart() {}
+
             override fun onMeetingCoHostChanged(p0: Long) {}
             override fun onLowOrRaiseHandStatusChanged(p0: Long, p1: Boolean) {}
             override fun onSinkAttendeeChatPriviledgeChanged(p0: Int) {}
@@ -164,7 +172,13 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onMeetingHostChanged(p0: Long) {}
             override fun onHostAskUnMute(p0: Long) {}
             override fun onUserAudioStatusChanged(p0: Long) {}
+            override fun onUserAudioStatusChanged(p0: Long, p1: InMeetingServiceListener.AudioStatus?) {}
+
+            override fun onUserNameChanged(p0: Long, p1: String?) {}
+
             override fun onUserVideoStatusChanged(p0: Long) {}
+            override fun onUserVideoStatusChanged(p0: Long, p1: InMeetingServiceListener.VideoStatus?) {}
+
             override fun onMeetingNeedPasswordOrDisplayName(p0: Boolean, p1: Boolean, p2: InMeetingEventHandler?) {}
         })
         meetingService.joinMeetingWithParams(registrar.activeContext(), params, opts)
@@ -320,9 +334,17 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onChatMessageReceived(p0: InMeetingChatMessage?) {}
             override fun onUserNetworkQualityChanged(p0: Long) {}
             override fun onMeetingFail(p0: Int, p1: Int) {}
+            override fun onFreeMeetingUpgradeToProMeeting() {}
+
+            override fun onFreeMeetingNeedToUpgrade(p0: FreeMeetingNeedUpgradeType?, p1: String?) {}
+
             override fun onUserAudioTypeChanged(p0: Long) {}
+            override fun onFreeMeetingUpgradeToGiftFreeTrialStop() {}
+
             override fun onMyAudioSourceTypeChanged(p0: Int) {}
             override fun onSilentModeChanged(p0: Boolean) {}
+            override fun onFreeMeetingUpgradeToGiftFreeTrialStart() {}
+
             override fun onMeetingCoHostChanged(p0: Long) {}
             override fun onLowOrRaiseHandStatusChanged(p0: Long, p1: Boolean) {}
             override fun onSinkAttendeeChatPriviledgeChanged(p0: Int) {}
@@ -337,7 +359,13 @@ class ZoomSdkController(private val registrar: PluginRegistry.Registrar) {
             override fun onMeetingHostChanged(p0: Long) {}
             override fun onHostAskUnMute(p0: Long) {}
             override fun onUserAudioStatusChanged(p0: Long) {}
+            override fun onUserAudioStatusChanged(p0: Long, p1: InMeetingServiceListener.AudioStatus?) {}
+
+            override fun onUserNameChanged(p0: Long, p1: String?) {}
+
             override fun onUserVideoStatusChanged(p0: Long) {}
+            override fun onUserVideoStatusChanged(p0: Long, p1: InMeetingServiceListener.VideoStatus?) {}
+
             override fun onMeetingNeedPasswordOrDisplayName(p0: Boolean, p1: Boolean, p2: InMeetingEventHandler?) {}
         })
 
