@@ -50,8 +50,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> signInWithZoom() async {
     ZoomUs.instance.signInWithZoom(
-      email: "official.rouf69nb@gmail.com",
-      password: "Rouf69nb"
+      email: "", //ZOOM ACCOUNT EMAIL
+      password: "" //ZOOM PASSWORD
     ).listen((x){
       print(x);
       if(mounted)setState(() {
