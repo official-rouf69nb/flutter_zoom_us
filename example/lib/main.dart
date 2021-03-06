@@ -21,8 +21,8 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     ZoomUs.instance.initSdk(
-      appKey: "qClDCUTS1sHPHsNIQCWoKaElsdlpfMA64RpV",
-      appSecret: "mMts2ZQpuaL6NvTmDnMRn02S3HDoSiCtfrJe"
+      appKey: "",
+      appSecret: ""
     ).listen((x){
       print(x);
       if(mounted)setState(() {
